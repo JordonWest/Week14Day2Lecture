@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <div class="post">
+    {% if post.published_date %}
+      <div class="date">
+        {{ post.published_date }}
+      </div>
+    {% endif %}
+    <a class="btn btn-default" href="{% url 'edit_post' post_id=post.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.text|linebreaksbr }}</p>
+    <h2>COMMENTS BELOW</h2>
+    {% for comment in comments %}
+    <p>{{ comment.text }}
+      <a href="{% url 'edit_comment' post.id comment.id %}">edit</a>
+      <a href="{% url 'delete_comment' post.id comment.id %}">delete</a>
+    </p>
+    {% endfor %}
+
+    <br/>
+    <a href="{% url 'new_comment' post.id %}">Create Comment</a>
+    <br/>
+    <a href="{% url 'delete_post' post.id %}">Delete This Post</a>
+  </div>
+{% endblock %}
